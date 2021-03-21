@@ -1,0 +1,7 @@
+{
+  "name": "callback-handler",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/twin-te/callback-handler.git",
+  "license": "MIT"
+}
