@@ -5,7 +5,7 @@ import { createClient, wrapGrpcRequestMethodFactory } from './grpc';
 const userServiceClient = createClient(
   ['services/user-service/protos/UserService.proto'],
   UserService,
-  'localhost:50051',
+  process.env.USER_SERVICE_HOST || 'user:50051',
 );
 
 const methodWrapper = wrapGrpcRequestMethodFactory(userServiceClient);

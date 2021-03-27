@@ -4,7 +4,7 @@ import { createClient, wrapGrpcRequestMethodFactory } from './grpc';
 const sessionServiceClient = createClient(
   ['services/session-service/protos/SessionService.proto'],
   SessionService,
-  'localhost:50052',
+  process.env.SESSION_SERVICE_HOST || 'session:50051',
 );
 
 const methodWrapper = wrapGrpcRequestMethodFactory(sessionServiceClient);
