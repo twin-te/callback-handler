@@ -1,6 +1,6 @@
-[submodule "user-service"]
-	path = user-service
-	url = https://github.com/twin-te/user-service.git
 [submodule "services/user-service"]
 	path = services/user-service
 	url = https://github.com/twin-te/user-service.git
+[submodule "services/session-service"]
+	path = services/session-service
+	url = https://github.com/twin-te/session-service.git
