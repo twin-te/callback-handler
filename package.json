@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "cross-env LOG_LEVEL=trace ts-node --files src/index.ts",
-    "proto": "./proto-gen.sh"
+    "proto": "./proto-gen.sh",
+    "build": "rm -rf ./dist && tsc"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.2",
