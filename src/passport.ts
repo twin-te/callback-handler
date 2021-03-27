@@ -6,15 +6,12 @@ export function configurePassport() {
     'google',
     new GoogleStrategy(
       {
-        clientID: '236104602181-psovvajpucovntgs9jae5n97dqt9t52c.apps.googleusercontent.com',
-        clientSecret: '5jQ7Gf7ax16dvGg8eXG54QpB',
-        callbackURL: 'http://localhost:30000/v1/auth/google/callback',
-        passReqToCallback: true,
-        accessType: 'offline',
+        clientID: process.env.GOOGLE_CLIENT_ID!,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+        callbackURL: `${process.env.HOST_URL}/v1/auth/google/callback`,
       },
-      (req, accessToken, refreshToken, profile, cb) => {
-        console.log('req', req);
-        cb(null, { id: 'test' });
+      (accessToken, refreshToken, profile, cb) => {
+        cb(null, { id: profile.id });
       },
     ),
   );
