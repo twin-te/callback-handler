@@ -18,34 +18,34 @@ export function configurePassport() {
     ),
   );
 
-  passport.use(
-    'twitter',
-    new TwitterStrategy(
-      {
-        consumerKey: process.env.TWITTER_CONSUMER_KEY!,
-        consumerSecret: process.env.TWITTER_CONSUMER_SECRET!,
-        callbackURL: `${process.env.HOST_URL}/v1/auth/twitter/callback`,
-      },
-      (_accessToken, _refreshToken, profile, cb) => {
-        cb(null, { id: profile.id });
-      },
-    ),
-  );
+  // passport.use(
+  //   'twitter',
+  //   new TwitterStrategy(
+  //     {
+  //       consumerKey: process.env.TWITTER_CONSUMER_KEY!,
+  //       consumerSecret: process.env.TWITTER_CONSUMER_SECRET!,
+  //       callbackURL: `${process.env.HOST_URL}/v1/auth/twitter/callback`,
+  //     },
+  //     (_accessToken, _refreshToken, profile, cb) => {
+  //       cb(null, { id: profile.id });
+  //     },
+  //   ),
+  // );
 
-  passport.use(
-    'apple',
-    new AppleStrategy(
-      {
-        clientID: process.env.APPLE_CLIENT_ID!,
-        teamID: process.env.APPLE_TEAM_ID!,
-        keyID: process.env.APPLE_KEY_ID!,
-        scope: '',
-        privateKeyLocation: process.env.APPLE_PRIVATE_KEY_LOCATION,
-        callbackURL: `${process.env.HOST_URL}/v1/auth/apple/callback`,
-      },
-      (_accessToken, _refreshToken, _idToken, profile, cb) => {
-        cb(null, { id: profile.id });
-      },
-    ),
-  );
+  // passport.use(
+  //   'apple',
+  //   new AppleStrategy(
+  //     {
+  //       clientID: process.env.APPLE_CLIENT_ID!,
+  //       teamID: process.env.APPLE_TEAM_ID!,
+  //       keyID: process.env.APPLE_KEY_ID!,
+  //       scope: '',
+  //       privateKeyLocation: process.env.APPLE_PRIVATE_KEY_LOCATION,
+  //       callbackURL: `${process.env.HOST_URL}/v1/auth/apple/callback`,
+  //     },
+  //     (_accessToken, _refreshToken, _idToken, profile, cb) => {
+  //       cb(null, { id: profile.id });
+  //     },
+  //   ),
+  // );
 }
