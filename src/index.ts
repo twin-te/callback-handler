@@ -1,6 +1,7 @@
 import express from 'express';
 import passport from 'passport';
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
+import { handleAuth, handleAuthCallback } from './handlers/auth';
 
 const app = express();
 
@@ -14,17 +15,13 @@ passport.use(
       passReqToCallback: true,
     },
     (req, accessToken, refreshToken, profile, cb) => {
-      cb(null, { id: 'test' });
+      cb(null, { id: profile.id });
     },
   ),
 );
 
-app.get('/v1/auth/:provider', passport.authenticate('google', { scope: ['profile'], session: false }));
-
-app.get('/v1/auth/:provider/callback', passport.authenticate('google', { session: false }), (req, res) => {
-  res.redirect('https://google.co.jp');
-  res.send();
-});
+app.get('/v1/auth/:provider', handleAuth);
+app.get('/v1/auth/:provider/callback', handleAuthCallback);
 
 app.listen(30000);
 
