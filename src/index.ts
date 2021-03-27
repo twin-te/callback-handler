@@ -4,8 +4,10 @@ dotenv.config();
 import express from 'express';
 import { handleAuth, handleAuthCallback } from './handlers/auth';
 import { configurePassport } from './passport';
+import cookieParser from 'cookie-parser';
 
 const app = express();
+app.use(cookieParser());
 
 configurePassport();
 

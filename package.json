@@ -9,6 +9,7 @@
     "proto": "./proto-gen.sh"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.2",
     "@types/node": "^14.14.35",
     "@types/passport-apple": "^1.1.0",
     "@types/passport-google-oauth": "^1.0.41",
@@ -26,6 +27,7 @@
   "dependencies": {
     "@grpc/grpc-js": "^1.2.12",
     "@grpc/proto-loader": "^0.5.6",
+    "cookie-parser": "^1.4.5",
     "date-fns": "^2.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
