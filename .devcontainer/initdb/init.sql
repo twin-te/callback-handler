@@ -1,0 +1,2 @@
+create database twinte_session_serivce;
+create database twinte_user_service;

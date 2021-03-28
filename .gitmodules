@@ -4,3 +4,4 @@
 [submodule "services/session-service"]
 	path = services/session-service
 	url = https://github.com/twin-te/session-service.git
+	branch = develop

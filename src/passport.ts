@@ -10,7 +10,7 @@ export function configurePassport() {
       {
         clientID: process.env.GOOGLE_CLIENT_ID!,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-        callbackURL: `${process.env.HOST_URL}/v1/auth/google/callback`,
+        callbackURL: `${process.env.HOST_URL}/google/callback`,
       },
       (_accessToken, _refreshToken, profile, cb) => {
         cb(null, { id: profile.id });
@@ -24,7 +24,7 @@ export function configurePassport() {
       {
         consumerKey: process.env.TWITTER_CONSUMER_KEY!,
         consumerSecret: process.env.TWITTER_CONSUMER_SECRET!,
-        callbackURL: `${process.env.HOST_URL}/v1/auth/twitter/callback`,
+        callbackURL: `${process.env.HOST_URL}/twitter/callback`,
       },
       (_accessToken, _refreshToken, profile, cb) => {
         cb(null, { id: profile.id });
@@ -40,8 +40,8 @@ export function configurePassport() {
         teamID: process.env.APPLE_TEAM_ID!,
         keyID: process.env.APPLE_KEY_ID!,
         scope: '',
-        privateKeyLocation: process.env.APPLE_PRIVATE_KEY_LOCATION,
-        callbackURL: `${process.env.HOST_URL}/v1/auth/apple/callback`,
+        privateKeyString: process.env.APPLE_PRIVATE_KEY,
+        callbackURL: `${process.env.HOST_URL}/apple/callback`,
       },
       (_accessToken, _refreshToken, _idToken, profile, cb) => {
         cb(null, { id: profile.id });

@@ -11,7 +11,14 @@ export async function handleAuth(req: Request, res: Response) {
     return;
   }
 
-  const callbackUrl = req.query['redirect_uri'];
+  const callbackUrl = req.query['redirect_url'];
+
+  if (!callbackUrl) {
+    res.status(400);
+    res.send('please specify redirect_url');
+    return;
+  }
+
   res.cookie('twinte_auth_callback', callbackUrl, {
     maxAge: 3 * 60 * 1000,
     httpOnly: true,
@@ -21,7 +28,11 @@ export async function handleAuth(req: Request, res: Response) {
   passport.authenticate(provider, {
     scope: ['profile'],
     session: false,
-  })(req, res);
+  })(req, res, (err: any) => {
+    console.error(err);
+    res.status(500);
+    res.send(err.message);
+  });
 }
 
 export async function handleAuthCallback(req: Request, res: Response) {
@@ -32,6 +43,10 @@ export async function handleAuthCallback(req: Request, res: Response) {
   }
 
   await passport.authenticate(provider, { session: false })(req, res, async () => {
+    // cookie cleanup
+    await (() =>
+      new Promise<void>((resolve, reject) => req.session?.destroy((err) => (err ? reject(err) : resolve()))))();
+
     if (!req.user) {
       res.sendStatus(400);
       return;
@@ -43,12 +58,16 @@ export async function handleAuthCallback(req: Request, res: Response) {
 
     const callbackUrl = req.cookies['twinte_auth_callback'] || 'https://www.twinte.net';
 
-    res.cookie('twinte_session', session.sessionId, {
+    res.cookie(process.env.COOKIE_NAME!, session.sessionId, {
       expires: expiredDate,
       secure: cookieOptions.secure,
       httpOnly: true,
       sameSite: 'lax',
     });
+
+    // cookie cleanup
+    res.clearCookie('connect.sid');
+    res.clearCookie('twinte_auth_callback');
 
     res.redirect(callbackUrl);
     res.send();
