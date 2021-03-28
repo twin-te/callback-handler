@@ -28,7 +28,11 @@ export async function handleAuth(req: Request, res: Response) {
   passport.authenticate(provider, {
     scope: ['profile'],
     session: false,
-  })(req, res, console.error);
+  })(req, res, (err: any) => {
+    console.error(err);
+    res.status(500);
+    res.send(err.message);
+  });
 }
 
 export async function handleAuthCallback(req: Request, res: Response) {
