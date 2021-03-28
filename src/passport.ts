@@ -40,7 +40,7 @@ export function configurePassport() {
         teamID: process.env.APPLE_TEAM_ID!,
         keyID: process.env.APPLE_KEY_ID!,
         scope: '',
-        privateKeyLocation: process.env.APPLE_PRIVATE_KEY_LOCATION,
+        privateKeyString: process.env.APPLE_PRIVATE_KEY,
         callbackURL: `${process.env.HOST_URL}/v1/auth/apple/callback`,
       },
       (_accessToken, _refreshToken, _idToken, profile, cb) => {
