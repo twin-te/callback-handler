@@ -17,6 +17,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: { secure: process.env.NODE_ENV !== 'development' },
+    proxy: true,
   }),
 );
 app.use(passport.initialize());
