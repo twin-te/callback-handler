@@ -10,6 +10,8 @@ import passport from 'passport';
 
 const app = express();
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
+
 configurePassport();
 app.use(
   session({
