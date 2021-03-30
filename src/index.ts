@@ -24,7 +24,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.get('/logout', handleLogout);
 app.get('/:provider', handleAuth);
-app.get('/:provider/callback', handleAuthCallback);
+app.use('/:provider/callback', handleAuthCallback);
 
 app.listen(process.env.PORT ? parseInt(process.env.PORT) : 3001);
 
