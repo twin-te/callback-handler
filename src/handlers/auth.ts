@@ -4,6 +4,17 @@ import passport from 'passport';
 import { sessionService } from '../services/sessionService';
 import { userService } from '../services/userService';
 
+const cookieName = process.env.COOKIE_NAME ?? 'twinte_session';
+
+/**
+ * twinteのドメインにしかリダイレクトを返さないようにする
+ */
+function validateRedirectUrl(url?: string) {
+  if (!url) return false;
+  else if (process.env.NODE_ENV === 'development') return true;
+  else return /^https:\/\/([a-zA-Z0-9-]+\.)*twinte\.net/.test(url);
+}
+
 export async function handleAuth(req: Request, res: Response) {
   const provider = req.params['provider'];
   if (provider !== 'google' && provider !== 'twitter' && provider !== 'apple') {
@@ -11,11 +22,17 @@ export async function handleAuth(req: Request, res: Response) {
     return;
   }
 
-  const callbackUrl = req.query['redirect_url'];
+  const callbackUrl = req.query['redirect_url'] as string;
 
   if (!callbackUrl) {
     res.status(400);
     res.send('please specify redirect_url');
+    return;
+  }
+
+  if (!validateRedirectUrl(callbackUrl)) {
+    res.status(400);
+    res.send('invalid redirect_url');
     return;
   }
 
@@ -58,7 +75,7 @@ export async function handleAuthCallback(req: Request, res: Response) {
 
     const callbackUrl = req.cookies['twinte_auth_callback'] || 'https://www.twinte.net';
 
-    res.cookie(process.env.COOKIE_NAME!, session.sessionId, {
+    res.cookie(cookieName, session.sessionId, {
       expires: expiredDate,
       secure: cookieOptions.secure,
       httpOnly: true,
@@ -72,4 +89,23 @@ export async function handleAuthCallback(req: Request, res: Response) {
     res.redirect(callbackUrl);
     res.send();
   });
+}
+
+export async function handleLogout(req: Request, res: Response) {
+  const callbackUrl = req.query['redirect_url'] as string;
+
+  if (!callbackUrl) {
+    res.status(400);
+    res.send('please specify redirect_url');
+    return;
+  }
+
+  if (!validateRedirectUrl(callbackUrl)) {
+    res.status(400);
+    res.send('invalid redirect_url');
+    return;
+  }
+
+  res.clearCookie(cookieName);
+  res.redirect(callbackUrl);
 }

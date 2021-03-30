@@ -3,7 +3,7 @@ dotenv.config();
 
 import express from 'express';
 import session from 'express-session';
-import { handleAuth, handleAuthCallback } from './handlers/auth';
+import { handleAuth, handleAuthCallback, handleLogout } from './handlers/auth';
 import { configurePassport } from './passport';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
@@ -22,6 +22,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.get('/logout', handleLogout);
 app.get('/:provider', handleAuth);
 app.get('/:provider/callback', handleAuthCallback);
 
