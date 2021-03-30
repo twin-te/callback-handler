@@ -40,11 +40,12 @@ export function configurePassport() {
         teamID: process.env.APPLE_TEAM_ID!,
         keyID: process.env.APPLE_KEY_ID!,
         scope: '',
-        privateKeyString: process.env.APPLE_PRIVATE_KEY,
+        privateKeyString: process.env.APPLE_PRIVATE_KEY!.replace(/\\n/gm, '\n'),
         callbackURL: `${process.env.HOST_URL}/apple/callback`,
+        passReqToCallback: false,
       },
       (_accessToken, _refreshToken, _idToken, profile, cb) => {
-        cb(null, { id: profile.id });
+        cb(null, { id: _idToken.sub });
       },
     ),
   );
