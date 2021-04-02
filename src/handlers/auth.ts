@@ -73,7 +73,7 @@ export async function handleAuthCallback(req: Request, res: Response) {
     const { session, cookieOptions } = await sessionService.startSession({ userId: user.id });
     const expiredDate = fromUnixTime(session.expiredAt.seconds as number);
 
-    const callbackUrl = req.cookies['twinte_auth_callback'] || 'https://www.twinte.net';
+    const callbackUrl = req.cookies['twinte_auth_callback'] || 'https://app.twinte.net';
 
     res.cookie(cookieName, session.sessionId, {
       expires: expiredDate,
