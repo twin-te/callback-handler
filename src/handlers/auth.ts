@@ -79,7 +79,7 @@ export async function handleAuthCallback(req: Request, res: Response) {
       expires: expiredDate,
       secure: cookieOptions.secure,
       httpOnly: true,
-      sameSite: 'lax',
+      sameSite: 'none',
     });
 
     // cookie cleanup
