@@ -66,7 +66,10 @@ export async function handleAuthCallback(req: Request, res: Response) {
       new Promise<void>((resolve, reject) => req.session?.destroy((err) => (err ? reject(err) : resolve()))))();
 
     if (!req.user) {
-      res.sendStatus(400);
+      res.status(400).send(`
+        <p>BadRequest</p>
+        <button onclick="location.reload()">再読み込み</button>
+      `); // twitterが上手く動かない対応一時処理
       return;
     }
 
