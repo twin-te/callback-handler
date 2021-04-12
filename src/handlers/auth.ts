@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import passport from 'passport';
 import { sessionService } from '../services/sessionService';
 import { userService } from '../services/userService';
+import { applySessionCookie } from '../utils';
 
 const cookieName = process.env.COOKIE_NAME ?? 'twinte_session';
 
@@ -69,22 +70,13 @@ export async function handleAuthCallback(req: Request, res: Response) {
       return;
     }
 
-    const user = await userService.getOrCreateUser({ provider: provider, socialId: req.user.id });
-    const { session, cookieOptions } = await sessionService.startSession({ userId: user.id });
-    const expiredDate = fromUnixTime(session.expiredAt.seconds as number);
-
-    const callbackUrl = req.cookies['twinte_auth_callback'] || 'https://app.twinte.net';
-
-    res.cookie(cookieName, session.sessionId, {
-      expires: expiredDate,
-      secure: cookieOptions.secure,
-      httpOnly: true,
-      sameSite: 'none',
-    });
+    await applySessionCookie(provider, req.user.id, res);
 
     // cookie cleanup
     res.clearCookie('connect.sid');
     res.clearCookie('twinte_auth_callback');
+
+    const callbackUrl = req.cookies['twinte_auth_callback'] || 'https://app.twinte.net';
 
     res.redirect(callbackUrl);
     res.send();

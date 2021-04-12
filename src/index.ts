@@ -7,6 +7,7 @@ import { handleAuth, handleAuthCallback, handleLogout } from './handlers/auth';
 import { configurePassport } from './passport';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
+import { handleGoogleIdToken } from './handlers/idToken';
 
 const app = express();
 app.use(cookieParser());
@@ -27,6 +28,7 @@ app.use(passport.session());
 app.get('/logout', handleLogout);
 app.get('/:provider', handleAuth);
 app.use('/:provider/callback', handleAuthCallback);
+app.use('/google/idToken', handleGoogleIdToken);
 
 app.listen(process.env.PORT ? parseInt(process.env.PORT) : 3001);
 
