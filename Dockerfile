@@ -19,7 +19,7 @@ LABEL org.opencontainers.image.source https://github.com/twin-te/callback-handle
 COPY --from=build-env /usr/src/app/dist ./dist
 COPY --from=build-env /usr/src/app/generated ./generated
 
-COPY --from=build-env /usr/src/app/services/user-service/protos/ ./services/user-service/protos/
+COPY --from=build-env /usr/src/app/services/user-service/server/pb/ ./services/user-service/server/pb/
 COPY --from=build-env /usr/src/app/services/session-service/protos/ ./services/session-service/protos/
 
 COPY --from=build-env /usr/src/app/package.json .

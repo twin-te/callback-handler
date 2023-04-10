@@ -10,7 +10,7 @@ yarn pbjs \
   --no-decode \
   --path ../../ \
   --out generated/services/user/index.js \
-  ./services/user-service/protos/UserService.proto
+  ./services/user-service/server/pb/UserService.proto
 
 yarn pbts \
   --out ./generated/services/user/index.d.ts \
