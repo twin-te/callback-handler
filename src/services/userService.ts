@@ -3,7 +3,7 @@ import { Provider } from '../models/provider';
 import { createClient, wrapGrpcRequestMethodFactory } from './grpc';
 
 const userServiceClient = createClient(
-  ['services/user-service/protos/UserService.proto'],
+  ['services/user-service/server/pb/UserService.proto'],
   UserService,
   process.env.USER_SERVICE_HOST || 'user:50051',
 );
